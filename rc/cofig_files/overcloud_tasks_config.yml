@@ -1,0 +1,126 @@
+### Run triggers
+setup_os_env: true
+user: true
+network: true
+net_port: false
+aggregate: false
+flavor: true
+image: true
+keypair: false
+security_group: false
+instance: false
+overcloud_delete: false
+resources_output: false
+
+# Set the state of the resource.
+# The state could be 'present' or 'absent'.
+resource_state: present
+
+# The name of the overcloud/user, the tasks should be run on.
+# The user created below could be used as an overcloud_name to
+# run the tasks from the created user.
+overcloud_name: overcloud
+
+# Custom quotas could be defined for each user during the user creation.
+users:
+  - name: test_user1
+    pass: test_user1
+    project: test_user1
+    domain: default
+    role: member
+    quota:
+      - cores: 20
+        ram: 20480
+        instances: 25
+  - name: test_user2
+    pass: test_user2
+    project: test_user2
+    domain: default
+    role: member
+  - name: test_user3
+    pass: test_user3
+    project: test_user3
+    domain: default
+    role: member
+
+# Networks
+# Define the networks that should be created on the overcloud.
+# 'External: true' value could be defined just for the external network.
+# Allocation pools could be defined as an option in case specific pool range should be defined.
+# Otherwise, pool will be calculated by 'cidr' value.
+# 'network_type' and 'ip_version' arguments could be defined as an option.
+# By default, 'network_type' uses 'vlan', 'ip_version' uses 'ipv4'
+# 'gateway_ip' could be defined in case there is a need to specify gateway ip address.
+# 'shared', define whether this network is shared or not.
+networks:
+#  - name: 'external'
+#    physical_network: 'datacentre'
+#    allocation_pool_start: '10.0.0.200'
+#    allocation_pool_end: '10.0.0.250'
+#    cidr: '10.0.0.0/24'
+#    enable_dhcp: true
+#    gateway_ip: '10.0.0.1'
+#    network_type: flat
+#    external: true
+#    shared: true
+#    router_name: router1
+
+  - name: 'internal'
+    allocation_pool_start: '10.10.110.100'
+    allocation_pool_end: '10.10.110.200'
+    cidr: '10.10.110.0/24'
+    enable_dhcp: true
+    gateway_ip: '10.10.110.254'
+    network_type: vxlan
+    shared: true
+#    external: false
+#    router_name: router1
+
+dns_nameservers:
+  - 8.8.8.8
+  - 8.8.4.4
+
+# Define the flavors that should be created.
+# Multiple "extra_specs" could be defined.
+flavors:
+  - name: m1.medium
+    ram: 2048
+    disk: 10
+    vcpus: 2
+
+# Images to upload
+images:
+  - name: centos7
+    url: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+  - name: rhel7.6
+    url: http://rhos-qe-mirror-tlv.usersys.redhat.com/brewroot/packages/rhel-guest-image/7.6/210/images/rhel-guest-image-7.6-210.x86_64.qcow2
+# The keypair that will be used by the instances.
+keypair_name: test_keypair1
+
+#security_groups:
+#  - name: test_secgroup
+#    rules:
+#      - protocol: icmp
+#        port_range_min: -1
+#        port_range_max: -1
+#        remote_ip_prefix: 0.0.0.0/0
+#      - protocol: tcp
+#        port_range_min: 22
+#        port_range_max: 22
+#        remote_ip_prefix: 0.0.0.0/0
+
+instances:
+  - name: vm1
+    overcloud_name: test_user1
+    groups: vm_groups
+    flavor: m1.medium
+    image: centos7
+    nics: net-name=internal #,port-name=internal_port1
+  - name: vm2
+    groups: vm_groups
+    flavor: m1.medium
+    image: centos7
+    nics: net-name=internal #,port-name=internal_port1
+
+# The path to the file output of the created resources.
+resources_output_file: /home/stack/resources_output_file.yml
