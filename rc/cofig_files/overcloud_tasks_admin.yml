@@ -8,9 +8,9 @@ flavor: true
 image: true
 keypair: false
 security_group: false
-instance: true
+instance: false
 overcloud_delete: false
-resources_output: true
+resources_output: false
 
 # Set the state of the resource.
 # The state could be 'present' or 'absent'.
@@ -97,101 +97,6 @@ instances:
     image: centos7
     nics: net-name=internal #,port-name=internal_port1
 
-# test_user1 instances:
-  - name: vm1-test_user1
-    overcloud_name: test_user1
-    groups: vm_groups
-    flavor: m1.medium
-    image: rhel7.6
-    nics: net-name=internal
-  - name: vm2-test_user1
-    overcloud_name: test_user1
-    groups: vm_groups
-    flavor: m1.medium
-    image: rhel7.6
-    nics: net-name=internal
-  - name: vm3-test_user1
-    overcloud_name: test_user1
-    groups: vm_groups
-    flavor: m1.medium
-    image: rhel7.6
-    nics: net-name=internal
-  - name: vm4-test_user1
-    overcloud_name: test_user1
-    groups: vm_groups
-    flavor: m1.medium
-    image: rhel7.6
-    nics: net-name=internal
-  - name: vm5-test_user1
-    overcloud_name: test_user1
-    groups: vm_groups
-    flavor: m1.medium
-    image: rhel7.6
-    nics: net-name=internal
-
-# test_user2 instances:
-  - name: vm1-test_user2
-    overcloud_name: test_user2
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm2-test_user2
-    overcloud_name: test_user2
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm3-test_user2
-    overcloud_name: test_user2
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm4-test_user2
-    overcloud_name: test_user2
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm5-test_user2
-    overcloud_name: test_user2
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-
-# test_user3 instances:
-  - name: vm1-test_user2
-    overcloud_name: test_user3
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm2-test_user2
-    overcloud_name: test_user3
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm3-test_user2
-    overcloud_name: test_user3
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm4-test_user2
-    overcloud_name: test_user3
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-  - name: vm5-test_user2
-    overcloud_name: test_user3
-    groups: vm_groups
-    flavor: m1.medium
-    image: centos7
-    nics: net-name=internal
-
 # The path to the file output of the created resources.
 resources_output_file: /home/stack/resources_output_file.yml
+:wq
