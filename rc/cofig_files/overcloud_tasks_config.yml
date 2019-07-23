@@ -21,6 +21,8 @@ resource_state: present
 # run the tasks from the created user.
 overcloud_name: overcloud
 
+clouds_yaml_file_path: ~/clouds.yaml
+
 # Custom quotas could be defined for each user during the user creation.
 users:
   - name: test_user1
