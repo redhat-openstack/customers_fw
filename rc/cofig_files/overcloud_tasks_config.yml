@@ -165,31 +165,31 @@ instances:
     nics: net-name=internal
 
 # test_user3 instances:
-  - name: vm1-test_user2
+  - name: vm1-test_user3
     overcloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
-  - name: vm2-test_user2
+  - name: vm2-test_user3
     overcloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
-  - name: vm3-test_user2
+  - name: vm3-test_user3
     overcloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
-  - name: vm4-test_user2
+  - name: vm4-test_user3
     overcloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
-  - name: vm5-test_user2
+  - name: vm5-test_user3
     overcloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
