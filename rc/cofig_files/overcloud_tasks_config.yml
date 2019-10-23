@@ -17,9 +17,9 @@ resources_output: true
 resource_state: present
 
 # The name of the overcloud/user, the tasks should be run on.
-# The user created below could be used as an overcloud_name to
+# The user created below could be used as an cloud_name to
 # run the tasks from the created user.
-overcloud_name: overcloud
+cloud_name: overcloud
 
 #use the same clouds/yaml file IR uses
 clouds_yaml_file_path: ~/clouds.yaml
@@ -85,11 +85,12 @@ images:
     url: http://rhos-qe-mirror-tlv.usersys.redhat.com/brewroot/packages/rhel-guest-image/7.6/210/images/rhel-guest-image-7.6-210.x86_64.qcow2
 
 # The keypair that will be used by the instances.
-keypair_name: test_keypair1
+keypairs:
+  - name: test_keypair
 
 instances:
   - name: vm1
-    overcloud_name: test_user1
+    cloud_name: test_user1
     groups: vm_groups
     flavor: m1.medium
     image: centos7
@@ -102,31 +103,31 @@ instances:
 
 # test_user1 instances:
   - name: vm1-test_user1
-    overcloud_name: test_user1
+    cloud_name: test_user1
     groups: vm_groups
     flavor: m1.medium
     image: rhel7.6
     nics: net-name=internal
   - name: vm2-test_user1
-    overcloud_name: test_user1
+    cloud_name: test_user1
     groups: vm_groups
     flavor: m1.medium
     image: rhel7.6
     nics: net-name=internal
   - name: vm3-test_user1
-    overcloud_name: test_user1
+    cloud_name: test_user1
     groups: vm_groups
     flavor: m1.medium
     image: rhel7.6
     nics: net-name=internal
   - name: vm4-test_user1
-    overcloud_name: test_user1
+    cloud_name: test_user1
     groups: vm_groups
     flavor: m1.medium
     image: rhel7.6
     nics: net-name=internal
   - name: vm5-test_user1
-    overcloud_name: test_user1
+    cloud_name: test_user1
     groups: vm_groups
     flavor: m1.medium
     image: rhel7.6
@@ -134,31 +135,31 @@ instances:
 
 # test_user2 instances:
   - name: vm1-test_user2
-    overcloud_name: test_user2
+    cloud_name: test_user2
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm2-test_user2
-    overcloud_name: test_user2
+    cloud_name: test_user2
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm3-test_user2
-    overcloud_name: test_user2
+    cloud_name: test_user2
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm4-test_user2
-    overcloud_name: test_user2
+    cloud_name: test_user2
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm5-test_user2
-    overcloud_name: test_user2
+    cloud_name: test_user2
     groups: vm_groups
     flavor: m1.medium
     image: centos7
@@ -166,31 +167,31 @@ instances:
 
 # test_user3 instances:
   - name: vm1-test_user3
-    overcloud_name: test_user3
+    cloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm2-test_user3
-    overcloud_name: test_user3
+    cloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm3-test_user3
-    overcloud_name: test_user3
+    cloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm4-test_user3
-    overcloud_name: test_user3
+    cloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
     nics: net-name=internal
   - name: vm5-test_user3
-    overcloud_name: test_user3
+    cloud_name: test_user3
     groups: vm_groups
     flavor: m1.medium
     image: centos7
