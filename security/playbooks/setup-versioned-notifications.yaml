@@ -1,0 +1,39 @@
+---
+- name: Setup versioned notifications for novajoin and nova pods
+  hosts: undercloud-0
+  user: stack
+  gather_facts: yes
+  become: yes
+  tasks:
+  - name: Install crudini package.
+    yum:
+      name:  crudini
+      state: present
+
+  - name: Configure novajoin containers
+    shell: |
+      crudini --del /var/lib/config-data/novajoin/etc/novajoin/join.conf DEFAULT notification_format
+      crudini --del /var/lib/config-data/novajoin/etc/novajoin/join.conf DEFAULT notifications_topic
+      crudini --set /var/lib/config-data/novajoin/etc/novajoin/join.conf DEFAULT notification_format versioned
+      crudini --set /var/lib/config-data/novajoin/etc/novajoin/join.conf DEFAULT notifications_topic novajoin_notifications
+      crudini --set /var/lib/config-data/novajoin/etc/novajoin/join.conf DEFAULT debug true
+
+  - name: Restart novajoin pods
+    shell: |
+      podman restart novajoin_notifier
+      podman restart novajoin_server
+
+  - name: Configure nova_api containers
+    shell: |
+      crudini --del /var/lib/config-data/puppet-generated/nova/etc/nova/nova.conf notifications notify_on_state_change
+      crudini --del /var/lib/config-data/puppet-generated/nova/etc/nova/nova.conf notifications notification_format
+      crudini --del /var/lib/config-data/puppet-generated/nova/etc/nova/nova.conf notifications versioned_notifications_topics
+      crudini --set /var/lib/config-data/puppet-generated/nova/etc/nova/nova.conf notifications notify_on_state_change vm_state
+      crudini --set /var/lib/config-data/puppet-generated/nova/etc/nova/nova.conf notifications notification_format versioned
+      crudini --set /var/lib/config-data/puppet-generated/nova/etc/nova/nova.conf notifications versioned_notifications_topics versioned_notifications,novajoin_notifications
+
+
+  - name: Restart nova_api pod
+    shell: |
+      podman restart nova_api
+      podman restart nova_compute
