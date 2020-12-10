@@ -1,0 +1,10 @@
+---
+- name: Create storage swift load
+  include: storage-load-swift-create.yaml
+  tags: swift
+- name: Create storage glance load
+  include: storage-load-glance-create.yaml
+  tags: glance
+- name: Create storage cinder load
+  include: storage-load-cinder-create.yaml
+  tags: cinder

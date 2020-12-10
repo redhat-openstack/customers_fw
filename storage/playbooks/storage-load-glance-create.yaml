@@ -1,0 +1,27 @@
+---
+- name: Create Glance load - download a cirros image adn upload it to glance
+  hosts: undercloud-0
+  user: stack
+  tasks:
+  - name: Create a directory for all storage-load related files
+    file:
+      path: ~stack/storage-load/glance
+      state: "{{ item }}"
+    with_items:
+      - absent
+      - directory
+
+  - name: Download cirros image
+    get_url:
+      url: http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
+      dest: ~stack/storage-load/glance/cirros_from_url.img
+
+  - name: Glance image create
+    shell: |
+      source ~stack/overcloudrc
+      cd ~stack/storage-load/glance/
+      glance image-create \
+      --name cirros-storage-test-001 \
+      --disk-format qcow2 \
+      --container-format bare \
+      --file ./cirros_from_url.img
