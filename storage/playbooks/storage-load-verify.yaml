@@ -1,0 +1,10 @@
+---
+- name: Verify storage swift load
+  include: storage-load-swift-verify.yaml
+  tags: swift
+- name: Verify storage glance load
+  include: storage-load-glance-verify.yaml
+  tags: glance
+- name: Verify storage cinder load
+  include: storage-load-cinder-verify.yaml
+  tags: cinder

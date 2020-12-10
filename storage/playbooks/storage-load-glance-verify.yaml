@@ -1,0 +1,31 @@
+---
+- name: get cirros image from glance and validate checksum
+  hosts: undercloud-0
+  user: stack
+  tasks:
+  - name: Glance image download
+    shell: |
+      source ~stack/overcloudrc
+      cd ~stack/storage-load/glance/
+      glance image-download \
+      `glance image-list | grep cirros-storage-test-001 | awk '{FS="|";print $2}'` \
+       --file ./cirros_from_glance.img
+
+  - name: url file checksum
+    stat:
+      path: ~stack/storage-load/glance/cirros_from_url.img
+      get_checksum: yes
+      checksum_algorithm: md5
+    register: url_file_checksum
+
+  - name: glance file checksum
+    stat:
+      path: ~stack/storage-load/glance/cirros_from_glance.img
+      get_checksum: yes
+      checksum_algorithm: md5
+    register: glance_file_checksum
+
+  - name: Verify same md5checsum for both files
+    fail:
+      msg: diff of md5 checksum for glance storage load image files.
+    when: url_file_checksum.stat.checksum != glance_file_checksum.stat.checksum

@@ -1,0 +1,39 @@
+---
+- name: Create swift load - files - upload to swift - and keep md5 for futor compare.
+  hosts: undercloud-0
+  user: stack
+  tasks:
+  - name: Create a directory for all storage-load related files
+    file:
+      path: ~stack/storage-load/swift
+      state: "{{ item }}"
+    with_items:
+      - absent
+      - directory
+
+  - name: Create uniq files locally
+    copy:
+      dest: "~stack/storage-load/swift/{{ item }}"
+      content: |
+        file {{ item }} with some random data :
+        {{ 9999 | random | to_uuid | truncate( 32, 'true', '') }}
+
+    with_items:
+    - test-file-1.txt
+    - test-file-2.txt
+    - test-file-3.txt
+
+  - name: Dump dm5
+    shell: |
+      cd ~stack/storage-load/swift/
+      md5sum test-file-* > test-files.md5
+
+  - name: Swift upload
+    shell: |
+      source ~stack/overcloudrc
+      cd ~stack/storage-load/swift/
+      swift upload container-001 {{ item }}
+    with_items:
+    - test-file-1.txt
+    - test-file-2.txt
+    - test-file-3.txt

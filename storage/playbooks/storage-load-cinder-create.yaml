@@ -1,0 +1,22 @@
+---
+- name: Create cinder load - create a volume
+  hosts: undercloud-0
+  user: stack
+  tasks:
+#  - name: Create a directory for all storage-load related files
+#    file:
+#      path: ~stack/storage-load/cinder
+#      state: "{{ item }}"
+#    with_items:
+#      - absent
+#      - directory
+#
+#  - name: Download cirros image
+#    get_url:
+#      url: http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
+#      dest: ~stack/storage-load/glance/cirros_from_url.img
+
+  - name: cinder volume image create
+    shell: |
+      source ~stack/overcloudrc
+      cinder create --name volume-storage-test-001 1

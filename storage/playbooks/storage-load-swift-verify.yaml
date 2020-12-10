@@ -1,0 +1,38 @@
+---
+- name: Verify md5 for storage load swift files
+  hosts: undercloud-0
+  user: stack
+  tasks:
+  - name: Create a directory for files versions from swift object storage
+    file:
+      path: ~stack/storage-load/swift/from-swift
+      state: "{{ item }}"
+    with_items:
+      - absent
+      - directory
+
+  - name: Download files from swift object storage
+    shell: |
+      source ~stack/overcloudrc
+      cd ~stack/storage-load/swift/from-swift
+      swift download container-001 {{ item }}
+    with_items:
+    - test-file-1.txt
+    - test-file-2.txt
+    - test-file-3.txt
+
+  - name: Dump dm5
+    shell: |
+      cd ~stack/storage-load/swift/from-swift
+      md5sum test-file-* > test-files-from-swift.md5
+
+  - name: Diff md5 files local version Vs downloaded from swift version
+    shell: |
+      diff ~stack/storage-load/swift/test-files.md5 ~stack/storage-load/swift/from-swift/test-files-from-swift.md5
+    register: md5diff
+    ignore_errors: yes
+
+  - name: Verify storage load swift correct md5
+    fail:
+      msg: diff failure of md5 checksum for swift storage load files.
+    when: md5diff.rc != 0

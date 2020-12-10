@@ -1,0 +1,28 @@
+---
+- name: check cinder volume is availble
+  hosts: undercloud-0
+  user: stack
+  tasks:
+  - name: cinder volume status
+    shell: |
+      source ~stack/overcloudrc
+      cinder show \
+      `cinder list | grep volume-storage-test-001 | awk '{FS="|";print $2}'` \
+      | grep ' status '
+    register: volume_status
+
+  - name: Verify volume is availble
+    fail:
+      msg: cinder volume volume-storage-test-001 is not availble.
+    when: '"available" not in volume_status.stdout'
+
+  - name: check cinder-volume service status
+    shell: |
+      source ~stack/overcloudrc
+      cinder service-list | grep cinder-volume
+    register: cinder_service_status
+
+  - name: Verify cinder-volume service is available
+    fail:
+      msg: cinder-volume service is not available
+    when: '"enabled | up" not in cinder_service_status.stdout'
