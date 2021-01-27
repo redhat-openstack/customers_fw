@@ -1,6 +1,6 @@
 ---
 - name: Create cinder load - create a volume
-  hosts: undercloud-0
+  hosts: undercloud
   user: stack
   tasks:
 #  - name: Create a directory for all storage-load related files

@@ -1,6 +1,6 @@
 ---
 - name: check cinder volume is availble
-  hosts: undercloud-0
+  hosts: undercloud
   user: stack
   tasks:
   - name: cinder volume status

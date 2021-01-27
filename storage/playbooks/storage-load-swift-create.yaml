@@ -1,6 +1,6 @@
 ---
 - name: Create swift load - files - upload to swift - and keep md5 for futor compare.
-  hosts: undercloud-0
+  hosts: undercloud
   user: stack
   tasks:
   - name: Create a directory for all storage-load related files

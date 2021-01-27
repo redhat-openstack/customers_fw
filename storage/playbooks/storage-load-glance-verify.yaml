@@ -1,6 +1,6 @@
 ---
 - name: get cirros image from glance and validate checksum
-  hosts: undercloud-0
+  hosts: undercloud
   user: stack
   tasks:
   - name: Glance image download

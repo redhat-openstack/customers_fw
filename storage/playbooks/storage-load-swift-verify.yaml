@@ -1,6 +1,6 @@
 ---
 - name: Verify md5 for storage load swift files
-  hosts: undercloud-0
+  hosts: undercloud
   user: stack
   tasks:
   - name: Create a directory for files versions from swift object storage

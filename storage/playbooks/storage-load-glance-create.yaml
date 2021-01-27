@@ -1,6 +1,6 @@
 ---
 - name: Create Glance load - download a cirros image adn upload it to glance
-  hosts: undercloud-0
+  hosts: undercloud
   user: stack
   tasks:
   - name: Create a directory for all storage-load related files
